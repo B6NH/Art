@@ -1,0 +1,101 @@
+
+# Tree
+
+# unicon tree.icn -o a.out -x
+
+link numbers
+
+procedure main()
+
+  # -------------------------------------------------------
+
+  &window := open("Tree","g")
+
+  # -------------------------------------------------------
+
+  # Color palette
+  colors := ["red","blue","orange","green","purple"]
+
+  # Ball radius
+  radius := 4
+
+  # Tree position
+  horizontalShift := 475
+  verticalShift := 50
+
+  # Tree scale
+  horizontalScale := 100
+  verticalScale := 0.8
+
+  # Step between balls
+  step := 6
+
+  # Angle range
+  angle := 1080.0
+
+  # Animation steps
+  aSteps := 100
+
+  # -------------------------------------------------------
+
+  # Get ball positions
+  points :=
+    getPoints(angle,step,
+              horizontalShift,verticalShift,
+              horizontalScale,verticalScale)
+
+  # Draw line between frist and last ball
+  DrawLine(points[1][1],points[1][2],
+           points[*points][1],points[*points][2])
+
+  # Run main loop
+  runAnimation(points,aSteps,colors,radius)
+
+  close(&window)
+
+  # -------------------------------------------------------
+
+end
+
+procedure getPoints(angle,step,hShift,vShift,hScale,vScale)
+
+  # Calculate number of balls
+  points := list(mceil(angle/step))
+
+  index := 1
+  every i := 1 to angle by step do {
+    val := sin(degToRad(i)) * hScale
+    points[index] := [val+hShift,i*vScale+vShift]
+    index +:= 1
+  }
+
+  return points
+
+end
+
+procedure runAnimation(points,aSteps,colors,radius)
+
+  # Loop
+  every i := 1 to aSteps do {
+
+    # Draw all balls
+    every j := 1 to *points do {
+
+      # Choose random color
+      Fg(?colors)
+
+      # Draw
+      FillCircle(points[j][1],points[j][2],radius)
+
+    }
+
+    WSync()
+    delay(200)
+
+  }
+
+end
+
+procedure degToRad(deg)
+  return deg * &pi / 180
+end
