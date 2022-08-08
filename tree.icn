@@ -44,9 +44,8 @@ procedure main()
               horizontalShift,verticalShift,
               horizontalScale,verticalScale)
 
-  # Draw line between frist and last ball
-  DrawLine(points[1][1],points[1][2],
-           points[*points][1],points[*points][2])
+  #DrawLine(points[1][1],points[1][2],
+  #         points[*points][1],points[*points][2])
 
   # Run main loop
   runAnimation(points,aSteps,colors,radius)
@@ -88,6 +87,9 @@ procedure runAnimation(points,aSteps,colors,radius)
       FillCircle(points[j][1],points[j][2],radius)
 
     }
+    
+    # Draw line between frist and last ball
+    DrawLine(points[1][1],points[1][2],points[*points][1],points[*points][2])
 
     WSync()
     delay(200)
